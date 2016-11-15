@@ -21,9 +21,16 @@ public class ElecUserForm {
 		private String viewflag;
 		
 		private String flag;
+		private String md5flag;
 		
 		
 		
+		public String getMd5flag() {
+			return md5flag;
+		}
+		public void setMd5flag(String md5flag) {
+			this.md5flag = md5flag;
+		}
 		public String getFlag() {
 			return flag;
 		}

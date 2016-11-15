@@ -75,11 +75,13 @@ public class ElecUserServiceImpl implements IElecUserService {
 		@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRED,readOnly=false)
 		public void saveElecUser(ElecUserForm elecUserForm) {
 				ElecUser elecUser=this.elecUserVOToPO(elecUserForm);
-				if(elecUserForm!=null&&!elecUserForm.getUserID().equals("")){
+				if(elecUser!=null&&elecUser.getUserID()!=null){
 					elecUserDao.update(elecUser);
 				}
 				else
+				{
 					elecUserDao.save(elecUser);	
+				}
 		}
 
 		private ElecUser elecUserVOToPO(ElecUserForm elecUserForm) {
@@ -96,17 +98,24 @@ public class ElecUserServiceImpl implements IElecUserService {
 				elecUser.setUserName(elecUserForm.getUserName());
 				elecUser.setLogonName(elecUserForm.getLogonName());
 				
+				String md5flag=elecUserForm.getMd5flag();
 				String password=elecUserForm.getLogonPwd();
-				MD5keyBean  md5=new MD5keyBean();
-				String md5password=md5.getkeyBeanofStr(password);
-				elecUser.setLogonPwd(md5password);
+				String md5password="";
+			
+				if(md5flag!=null&&md5flag.equals("1")){
+					md5password=password;
+				}else{
+					MD5keyBean  md5=new MD5keyBean();
+					md5password=md5.getkeyBeanofStr(password);
+				}
 				
+				
+				elecUser.setLogonPwd(md5password);
 				elecUser.setEmail(elecUserForm.getEmail());
 				elecUser.setContactTel(elecUserForm.getContactTel());
 				elecUser.setAddress(elecUserForm.getAddress());
 				elecUser.setIsDuty(elecUserForm.getIsDuty());
 				elecUser.setRemark(elecUserForm.getRemark());
-				elecUser.setLogonPwd(elecUserForm.getLogonPwd());
 				if(elecUserForm.getBirthday()!=null&&!elecUserForm.getBirthday().equals("")){
 					elecUser.setBirthday(StringHelper.stringConvertDate(elecUserForm.getBirthday()));
 				}
@@ -168,6 +177,18 @@ public class ElecUserServiceImpl implements IElecUserService {
 				checkflag="2";
 			}
 			return checkflag;
+		}
+
+		@Override
+		public ElecUser findElecUserByLogonName(String name) {
+			String hqlWhere=" and o.logonName=?";
+			Object[] params={name};
+			List<ElecUser>  list=elecUserDao.findCollectionByConditionNoPage(ElecUser.class, hqlWhere, params, null);
+			ElecUser elecUser=null;
+			if(list!=null&&list.size()>0){
+				elecUser=list.get(0);
+			}
+			return elecUser;
 		}
 		
 		

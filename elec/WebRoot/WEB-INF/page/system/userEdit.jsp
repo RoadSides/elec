@@ -71,6 +71,11 @@
 			return false; 
         }
 		 
+		var password=document.getElementById("logonPwd").value;
+		var defaultPassword=document.getElementById("logonPwd").defaultValue;
+		if(password==defaultPassword){
+			document.getElementById("md5flag").value="1";
+		}
 	   document.Form1.action="${pageContext.request.contextPath}/system/elecUserAction_save.action";
 	   document.Form1.submit();
 	   refreshOpener();
@@ -82,6 +87,7 @@
 
  <body>
     <form name="Form1" method="post">	
+    	<input  type="hidden"  name="md5flag"  value="">
     <br>
     
     <table cellSpacing="1" cellPadding="5" width="90%" align="center" bgColor="#eeeeee" style="border:1px solid #8ba7e3" border="0">
@@ -144,10 +150,10 @@
 </tr>
 <tr>
 <td align="center" bgColor="#f5fafe" class="ta_01">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</td>
-<td class="ta_01" bgColor="#ffffff"><input name="logonPwd" type="password" value='<s:property  value='logonPwd'/>' maxlength="25"  size=22>
+<td class="ta_01" bgColor="#ffffff"><input name="logonPwd" id="logonPwd" type="password"  value='<s:property  value='logonPwd'/>' maxlength="25"  size=22  >
 </td>
 <td align="center" bgColor="#f5fafe" class="ta_01">确认密码：</td>
-<td class="ta_01" bgColor="#ffffff"><input name="passwordconfirm" type="password" value="<s:property  value='logonPwd'/>" maxlength="25" size=22>
+<td class="ta_01" bgColor="#ffffff"><input name="passwordconfirm"  type="password" value="<s:property  value='logonPwd'/>" maxlength="25" size=22>
 </td>
 </tr>
 

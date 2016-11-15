@@ -3,15 +3,11 @@ package cn.itcast.elec.web.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import cn.itcast.elec.service.IElecSystemDDLService;
 import cn.itcast.elec.service.IElecUserService;
 import cn.itcast.elec.web.vo.ElecSystemDDLForm;
 import cn.itcast.elec.web.vo.ElecUserForm;
-
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
 
 @SuppressWarnings("serial")
